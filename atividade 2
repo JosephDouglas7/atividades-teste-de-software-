@@ -31,6 +31,23 @@ print("Tamanho:", pilha.size)       # Saída: 2
 print("Removido:", pilha.pop())     # Saída: 20
 print("Está vazia?", pilha.is_empty())  # Saída: False 
 
-#exemplo 2 capítulo 8 
+#exemplo 2 capítulo 8  
+
+import unittest
+
+# Importa a classe Stack que você criou
+from stack import Stack   # supondo que o arquivo da classe esteja salvo como stack.py
+
+class TestStack(unittest.TestCase):
+
+    def test_empty_stack(self):
+        stack = Stack()
+        empty = stack.is_empty()
+        self.assertTrue(empty)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
 
 
