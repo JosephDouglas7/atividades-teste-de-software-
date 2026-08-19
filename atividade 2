@@ -318,6 +318,62 @@ if __name__ == "__main__":
 
 #Exemplo 10 do capítulo 8 
 
+import unittest
+import json
+
+class Book:
+    def __init__(self, titulo):
+        self.titulo = titulo
+
+    def getTitulo(self):
+        return self.titulo
+
+
+class BookConst:
+    ESM = '{ "titulo": "Eng Soft Moderna" }'
+    NULLBOOK = '{ "titulo": "NULL" }'
+
+
+class BookService:
+    def search(self, isbn: int) -> str:
+        raise NotImplementedError
+
+
+class MockBookService(BookService):
+    def search(self, isbn: int) -> str:
+        if isbn == 1234:
+            return BookConst.ESM
+        return BookConst.NULLBOOK
+
+
+class BookSearch:
+    def __init__(self, rbs: BookService):
+        self.rbs = rbs
+
+    def getBook(self, isbn: int) -> Book:
+        json_str = self.rbs.search(isbn)
+        obj = json.loads(json_str)
+        titulo = obj.get("titulo")
+        return Book(titulo)
+
+
+class TestBookSearch(unittest.TestCase):
+
+    def setUp(self):
+        self.service = MockBookService()
+
+    def test_get_book(self):
+        bs = BookSearch(self.service)
+        titulo = bs.getBook(1234).getTitulo()
+        self.assertEqual("Eng Soft Moderna", titulo)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+#Exemplo 11 do capítulo 8 
+
+
 
 
 
