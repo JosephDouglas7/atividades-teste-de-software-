@@ -91,7 +91,46 @@ class TestStack(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-#exemplo 4 capítulo 8 
+#exemplo 4 capítulo 8  
+
+import unittest
+import threading
+import time
+
+class TaskResult:
+    def __init__(self):
+        self._value = None
+
+    def set(self, value):
+        self._value = value
+
+    def get(self):
+        return self._value
+
+
+class MyMath:
+    def asyncPI(self, n, resultado: TaskResult):
+        # Simula cálculo assíncrono de PI em uma thread separada
+        def calcular():
+            # Aqui poderíamos usar uma aproximação, mas para simplificar:
+            resultado.set(3.1415926535)
+        t = threading.Thread(target=calcular)
+        t.start()
+
+
+class TestFlakyExample(unittest.TestCase):
+
+    def test_exemplo_flaky(self):
+        resultado = TaskResult()
+        m = MyMath()
+        m.asyncPI(10, resultado)
+        time.sleep(1)  # espera a thread terminar
+        self.assertEqual(3.1415926535, resultado.get())
+
+
+if __name__ == "__main__":
+    unittest.main()
+
 
 
 
