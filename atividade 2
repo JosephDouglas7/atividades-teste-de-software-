@@ -184,6 +184,24 @@ if __name__ == "__main__":
 
 #exemplo 6 do capítulo 8 
 
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route("/imc", methods=["GET"])
+def calcular_imc():
+    peso = request.args.get("peso")
+    altura = request.args.get("altura")
+    try:
+        p = float(peso)
+        a = float(altura)
+        imc = p / (a * a)
+        return f"Índice de Massa Corporal (IMC): {imc}"
+    except (TypeError, ValueError):
+        return "Dados devem ser numéricos"
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 
