@@ -203,6 +203,41 @@ def calcular_imc():
 if __name__ == "__main__":
     app.run(debug=True)
 
+#exemplo 7 do capítulo 8 
+
+from flask import Flask, request
+
+app = Flask(__name__)
+
+class IMCModel:
+    def calculaIMC(self, p1, a1):
+        p = float(p1)
+        a = float(a1)
+        return p / (a * a)
+
+
+class IMCService:
+    def __init__(self):
+        self.model = IMCModel()
+
+    def calcular(self, peso, altura):
+        try:
+            imc = self.model.calculaIMC(peso, altura)
+            return f"Índice de Massa Corporal (IMC): {imc}"
+        except (TypeError, ValueError):
+            return "Dados devem ser numéricos"
+
+
+@app.route("/imc", methods=["GET"])
+def imc_endpoint():
+    peso = request.args.get("peso")
+    altura = request.args.get("altura")
+    service = IMCService()
+    return service.calcular(peso, altura)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 
