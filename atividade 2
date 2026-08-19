@@ -51,6 +51,45 @@ if __name__ == "__main__":
 
 #exemplo 3 capítulo 8 
 
+import unittest
+from stack import Stack   # supondo que sua classe Stack esteja em stack.py
+
+class TestStack(unittest.TestCase):
+
+    def setUp(self):
+        self.stack = Stack()
+
+    def test_empty_stack(self):
+        self.assertTrue(self.stack.is_empty())
+
+    def test_not_empty_stack(self):
+        self.stack.push(10)
+        self.assertFalse(self.stack.is_empty())
+
+    def test_size_stack(self):
+        self.stack.push(10)
+        self.stack.push(20)
+        self.stack.push(30)
+        size = self.stack.size()
+        self.assertEqual(3, size)
+
+    def test_push_pop_stack(self):
+        self.stack.push(10)
+        self.stack.push(20)
+        self.stack.push(30)
+        result = self.stack.pop()
+        result = self.stack.pop()
+        self.assertEqual(20, result)
+
+    def test_empty_stack_exception(self):
+        self.stack.push(10)
+        self.stack.pop()
+        with self.assertRaises(IndexError):  # em Python usamos IndexError
+            self.stack.pop()
+
+
+if __name__ == "__main__":
+    unittest.main()
 
 
 
