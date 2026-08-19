@@ -129,7 +129,62 @@ class TestFlakyExample(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    unittest.main() 
+
+#exemplo 5 do capítulo 8 
+
+import unittest
+
+class Book:
+    def __init__(self, title, author, year, publisher):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.publisher = publisher
+
+    def getTitle(self):
+        return self.title
+
+    def getAuthor(self):
+        return self.author
+
+    def getYear(self):
+        return self.year
+
+    def getPublisher(self):
+        return self.publisher
+
+
+class BookService:
+    def getBook(self, book_id):
+        # Simula busca de livro pelo ID
+        if book_id == 1234:
+            return Book(
+                "Engenharia Software Moderna",
+                "Marco Tulio Valente",
+                "2020",
+                "ASERG/DCC/UFMG"
+            )
+        return None
+
+
+class TestBookService(unittest.TestCase):
+
+    def test_book_service(self):
+        bs = BookService()
+        b = bs.getBook(1234)
+        self.assertEqual("Engenharia Software Moderna", b.getTitle())
+        self.assertEqual("Marco Tulio Valente", b.getAuthor())
+        self.assertEqual("2020", b.getYear())
+        self.assertEqual("ASERG/DCC/UFMG", b.getPublisher())
+
+
+if __name__ == "__main__":
     unittest.main()
+
+#exemplo 6 do capítulo 8 
+
+
 
 
 
