@@ -239,6 +239,53 @@ def imc_endpoint():
 if __name__ == "__main__":
     app.run(debug=True)
 
+#exemplo 8 do capítulo 8 
+
+import threading
+
+class TaskResult:
+    def __init__(self):
+        self._result = None
+
+    def setResult(self, value):
+        self._result = value
+
+    def getResult(self):
+        return self._result
+
+
+class MyMath:
+    def syncPI(self, prec: int) -> float:
+        # Aqui você poderia implementar um cálculo com precisão 'prec'
+        # Para simplificar, retornamos um valor fixo de π
+        pi = 3.1415926535
+        return pi
+
+    def asyncPI(self, prec: int, task: TaskResult):
+        def run():
+            pi = self.syncPI(prec)
+            task.setResult(pi)
+        t = threading.Thread(target=run)
+        t.start()
+
+if __name__ == "__main__":
+    resultado = TaskResult()
+    m = MyMath()
+    m.asyncPI(10, resultado)
+
+    # Espera a thread terminar
+    t = threading.Event()
+    t.wait(1)
+
+    print("Resultado:", resultado.getResult()) 
+
+#exemplo 9 do capítulo 8 
+
+
+
+
+# Exemplo de uso
+
 
 
 
