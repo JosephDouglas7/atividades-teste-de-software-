@@ -1,0 +1,36 @@
+#exemplo 1 capítulo 8 
+
+class Stack:
+    def __init__(self):
+        self.elements = []
+        self.size = 0
+
+    def size(self):
+        return self.size
+
+    def is_empty(self):
+        return self.size == 0
+
+    def push(self, elem):
+        self.elements.append(elem)
+        self.size += 1
+
+    def pop(self):
+        if self.is_empty():
+            raise IndexError("A pilha está vazia")
+        elem = self.elements.pop()
+        self.size -= 1
+        return elem
+
+
+# Exemplo de uso
+pilha = Stack()
+pilha.push(10)
+pilha.push(20)
+print("Tamanho:", pilha.size)       # Saída: 2
+print("Removido:", pilha.pop())     # Saída: 20
+print("Está vazia?", pilha.is_empty())  # Saída: False 
+
+#exemplo 2 capítulo 8 
+
+
