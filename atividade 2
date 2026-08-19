@@ -47,7 +47,11 @@ class TestStack(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main() 
+
+#exemplo 3 capítulo 8 
+
+
 
 
 
