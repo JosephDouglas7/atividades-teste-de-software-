@@ -281,10 +281,45 @@ if __name__ == "__main__":
 
 #exemplo 9 do capítulo 8 
 
+import json
 
+class Book:
+    def __init__(self, titulo):
+        self.titulo = titulo
+
+    def getTitle(self):
+        return self.titulo
+
+
+class BookService:
+    def search(self, isbn: int) -> str:
+        # Este método deve retornar uma string JSON
+        # Exemplo fictício:
+        return json.dumps({"titulo": "Engenharia Software Moderna"})
+
+
+class BookSearch:
+    def __init__(self, rbs: BookService):
+        self.rbs = rbs
+
+    def getBook(self, isbn: int) -> Book:
+        json_str = self.rbs.search(isbn)
+        obj = json.loads(json_str)
+        titulo = obj.get("titulo")
+        return Book(titulo)
 
 
 # Exemplo de uso
+if __name__ == "__main__":
+    service = BookService()
+    search = BookSearch(service)
+    book = search.getBook(1234)
+    print("Título:", book.getTitle())
+
+#Exemplo 10 do capítulo 8 
+
+
+
 
 
 
