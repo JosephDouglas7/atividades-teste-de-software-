@@ -539,7 +539,61 @@ class TestShoppingCart(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-#exemplo 14 do capítulo 8 
+#exemplo 14 do capítulo 8  
+
+import unittest
+
+class Appointment:
+    def __init__(self, descricao):
+        self.descricao = descricao
+
+
+class DB:
+    @staticmethod
+    def create():
+        return DB()
+
+    def __init__(self):
+        self.storage = []
+
+
+class AgendaFacade:
+    def __init__(self, db: DB):
+        self.db = db
+        self._appointments = []
+        self._next_id = 1
+
+    def addAppointment(self, app: Appointment) -> int:
+        self._appointments.append(app)
+        self.db.storage.append(app)
+        id_atual = self._next_id
+        self._next_id += 1
+        return id_atual
+
+    def listAppointments(self):
+        return self._appointments
+
+
+class TestAgendaFacade(unittest.TestCase):
+
+    def test_agenda_facade(self):
+        db = DB.create()
+        agenda = AgendaFacade(db)
+        app1 = Appointment("Consulta médica")
+        app2 = Appointment("Reunião de trabalho")
+        app3 = Appointment("Dentista")
+        id1 = agenda.addAppointment(app1)
+        id2 = agenda.addAppointment(app2)
+        id3 = agenda.addAppointment(app3)
+        apps = agenda.listAppointments()
+        self.assertEqual(3, len(apps))
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+#exemplo 15 do capítulo 8 
+
 
 
 
