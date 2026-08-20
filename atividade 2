@@ -371,7 +371,57 @@ class TestBookSearch(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-#Exemplo 11 do capítulo 8 
+#Exemplo 11 do capítulo 8  
+
+import unittest
+import json
+from unittest.mock import Mock
+
+class Book:
+    def __init__(self, titulo):
+        self.titulo = titulo
+
+    def getTitulo(self):
+        return self.titulo
+
+
+class BookConst:
+    ESM = '{ "titulo": "Eng Soft Moderna" }'
+    NULLBOOK = '{ "titulo": "NULL" }'
+
+
+class BookSearch:
+    def __init__(self, rbs):
+        self.rbs = rbs
+
+    def getBook(self, isbn: int) -> Book:
+        json_str = self.rbs.search(isbn)
+        obj = json.loads(json_str)
+        titulo = obj.get("titulo")
+        return Book(titulo)
+
+
+class TestBookSearch(unittest.TestCase):
+
+    def setUp(self):
+        # Cria um mock para BookService
+        self.service = Mock()
+        # Configura comportamento padrão
+        self.service.search.return_value = BookConst.NULLBOOK
+        # Configura comportamento específico para isbn 1234
+        self.service.search.side_effect = lambda isbn: (
+            BookConst.ESM if isbn == 1234 else BookConst.NULLBOOK
+        )
+
+    def test_get_book(self):
+        bs = BookSearch(self.service)
+        titulo = bs.getBook(1234).getTitulo()
+        self.assertEqual("Eng Soft Moderna", titulo)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
 
 
 
