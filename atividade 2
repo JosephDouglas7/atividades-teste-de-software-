@@ -458,6 +458,50 @@ def imc_endpoint():
 if __name__ == "__main__":
     app.run(debug=True)
 
+#exemplo 12 do capítulo 8 
+
+import unittest
+from unittest.mock import Mock
+from io import StringIO
+
+class IMCModel:
+    def calculaIMC(self, peso: str, altura: str) -> float:
+        p = float(peso)
+        a = float(altura)
+        return p / (a * a)
+
+
+class IMCServlet:
+    def __init__(self):
+        self.model = IMCModel()
+
+    def doGet(self, req, res):
+        peso = req.getParameter("peso")
+        altura = req.getParameter("altura")
+        imc = self.model.calculaIMC(peso, altura)
+        out = res.getWriter()
+        out.write(f"IMC: {round(imc, 1)}\n")  # arredonda para 1 casa como no teste
+
+
+class TestIMCServlet(unittest.TestCase):
+
+    def setUp(self):
+        self.req = Mock()
+        self.res = Mock()
+        self.sw = StringIO()
+        self.res.getWriter.return_value = self.sw
+
+    def test_do_get(self):
+        self.req.getParameter.side_effect = lambda key: "82" if key == "peso" else "1.80"
+        servlet = IMCServlet()
+        servlet.doGet(self.req, self.res)
+        self.assertEqual("IMC: 25.3\n", self.sw.getvalue())
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+#exemplo 13 do capítulo 8
 
 
 
