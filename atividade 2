@@ -501,7 +501,47 @@ class TestIMCServlet(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-#exemplo 13 do capítulo 8
+#exemplo 13 do capítulo 8 
+
+import unittest
+
+class Book:
+    def __init__(self, title: str, price: float, isbn: str):
+        self.title = title
+        self.price = price
+        self.isbn = isbn
+
+
+class ShoppingCart:
+    def __init__(self):
+        self.items = []
+        self.total = 0.0
+
+    def add(self, book: Book):
+        self.items.append(book)
+        self.total += book.price
+
+    def getTotal(self) -> float:
+        return self.total
+
+
+class TestShoppingCart(unittest.TestCase):
+
+    def test_add_get_total(self):
+        b1 = Book("book1", 10, "1")
+        b2 = Book("book2", 20, "2")
+        cart = ShoppingCart()
+        cart.add(b1)
+        cart.add(b2)
+        self.assertEqual(30.0, cart.getTotal())
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+#exemplo 14 do capítulo 8 
+
+
 
 
 
