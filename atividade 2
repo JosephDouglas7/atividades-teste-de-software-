@@ -420,7 +420,44 @@ class TestBookSearch(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main() 
+
+#exemplo 12 do capítulo 8 
+
+from flask import Flask, request
+
+app = Flask(__name__)
+
+class IMCModel:
+    def calculaIMC(self, peso: str, altura: str) -> float:
+        p = float(peso)
+        a = float(altura)
+        return p / (a * a)
+
+
+class IMCService:
+    def __init__(self):
+        self.model = IMCModel()
+
+    def calcular(self, peso, altura):
+        imc = self.model.calculaIMC(peso, altura)
+        return f"IMC: {imc}"
+
+
+@app.route("/imc", methods=["GET"])
+def imc_endpoint():
+    peso = request.args.get("peso")
+    altura = request.args.get("altura")
+    service = IMCService()
+    try:
+        return service.calcular(peso, altura)
+    except (TypeError, ValueError):
+        return "Dados devem ser numéricos"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
 
 
 
