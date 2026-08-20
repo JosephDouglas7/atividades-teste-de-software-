@@ -592,7 +592,44 @@ class TestAgendaFacade(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-#exemplo 15 do capítulo 8 
+#exemplo 15 do capítulo 8  
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+def main():
+    # cria um driver para acessar um servidor Web
+    driver = webdriver.Firefox()
+
+    # instrui o driver para "navegar" pelo Google
+    driver.get("http://www.google.com")
+
+    # obtém um campo de entrada de dados, de nome "q"
+    element = driver.find_element(By.NAME, "q")
+
+    # preenche esse campo com as palavras "software"
+    element.send_keys("software")
+
+    # submete os dados; como se fosse dado um "enter"
+    element.send_keys(Keys.RETURN)
+
+    # espera a página de resposta carregar (timeout de 8s)
+    WebDriverWait(driver, 8).until(
+        EC.title_contains("software")
+    )
+
+    # resultado deve ser: "software - Pesquisa Google"
+    print("Page title is:", driver.title)
+
+    # fecha o navegador
+    driver.quit()
+
+if __name__ == "__main__":
+    main()
+
 
 
 
